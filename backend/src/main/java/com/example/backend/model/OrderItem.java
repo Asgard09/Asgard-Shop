@@ -14,22 +14,29 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Review {
+public class OrderItem {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String review;
+    @JsonIgnore
+    @ManyToOne
+    private Order order;
 
     @ManyToOne
-    @JoinColumn(name = "product_id")
-    @JsonIgnore
     private Product product;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    private String size;
 
-    private LocalDateTime createdAt;
+    private int quantity;
+
+    private Integer price;
+
+    private Integer discountedPrice;
+
+    private Long userId;
+
+    private LocalDateTime deliveryDate;
 
 }
