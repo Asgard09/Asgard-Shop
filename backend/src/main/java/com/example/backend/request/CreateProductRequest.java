@@ -11,7 +11,7 @@ import java.util.Set;
 @Getter
 @Setter
 @AllArgsConstructor
-public class CreatProductRequest {
+public class CreateProductRequest {
     private String title;
 
     private String description;

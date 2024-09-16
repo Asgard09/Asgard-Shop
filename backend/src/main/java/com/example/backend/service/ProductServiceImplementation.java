@@ -5,7 +5,7 @@ import com.example.backend.model.Category;
 import com.example.backend.model.Product;
 import com.example.backend.repository.CategoryRepository;
 import com.example.backend.repository.ProductRepository;
-import com.example.backend.request.CreatProductRequest;
+import com.example.backend.request.CreateProductRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -29,7 +29,7 @@ public class ProductServiceImplementation implements ProductService {
 
 
     @Override
-    public Product createProduct(CreatProductRequest req) {
+    public Product createProduct(CreateProductRequest req) {
 
         Category topLevel = categoryRepository.findByName(req.getTopLevelCategory());
 
@@ -146,5 +146,11 @@ public class ProductServiceImplementation implements ProductService {
         Page<Product> filteredProducts = new PageImpl<>(pageContent,pageable,products.size());
 
         return filteredProducts;
+    }
+
+    @Override
+    public List<Product> findAllProducts() {
+        List<Product> products = productRepository.findAll();
+        return products;
     }
 }
