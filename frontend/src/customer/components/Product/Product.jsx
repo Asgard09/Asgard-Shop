@@ -13,20 +13,21 @@
   ```
 */
 "use client";
+import React from "react";
 
 import { useState } from "react";
-import {
-  Dialog,
-  DialogBackdrop,
-  DialogPanel,
-  Disclosure,
-  DisclosureButton,
-  DisclosurePanel,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuItems,
-} from "@headlessui/react";
+// import {
+//   Dialog,
+//   DialogBackdrop,
+//   DialogPanel,
+//   Disclosure,
+//   DisclosureButton,
+//   DisclosurePanel,
+//   Menu,
+//   MenuButton,
+//   MenuItem,
+//   MenuItems,
+// } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import {
   ChevronDownIcon,
@@ -38,12 +39,7 @@ import {
 import { mens_kurta } from "../../../Data/mens_kurta";
 import ProductCard from "./ProductCard";
 import { filters, singleFilter } from "./FilterData";
-import {
-  FormControlLabel,
-  FormLabel,
-  Radio,
-  RadioGroup,
-} from "@mui/material";
+import { FormControlLabel, FormLabel, Radio, RadioGroup } from "@mui/material";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { useLocation, useNavigate } from "react-router-dom";
 const sortOptions = [
@@ -60,43 +56,40 @@ export default function Product() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const handleFilter=(value, sectionId)=>{
-    const searchParams = new URLSearchParams(location.search)
+  const handleFilter = (value, sectionId) => {
+    const searchParams = new URLSearchParams(location.search);
 
-    let filterValue = searchParams.getAll(sectionId)
+    let filterValue = searchParams.getAll(sectionId);
 
-    if(filterValue.length>0 && filterValue[0].split(",").includes(value)){
-      filterValue=filterValue[0].split(",").filter((item) => item!==value);
-      
-      if(filterValue.length===0){
-        searchParams.delete(sectionId)
+    if (filterValue.length > 0 && filterValue[0].split(",").includes(value)) {
+      filterValue = filterValue[0].split(",").filter((item) => item !== value);
+
+      if (filterValue.length === 0) {
+        searchParams.delete(sectionId);
       }
-    }
-    else{
-      filterValue.push(value)
+    } else {
+      filterValue.push(value);
     }
 
-    if(filterValue.length>0){
+    if (filterValue.length > 0) {
       searchParams.set(sectionId, filterValue.join(","));
       const query = searchParams.toString();
-      navigate({search: `?${query}`})
+      navigate({ search: `?${query}` });
     }
-
-
-  }
+  };
 
   const handleRadioFilterChange = (e, sectionId) => {
-    const searchParams = new URLSearchParams(location.search)
-    
-    searchParams.set(sectionId, e.target.value)
+    const searchParams = new URLSearchParams(location.search);
+
+    searchParams.set(sectionId, e.target.value);
     const query = searchParams.toString();
-    navigate({search: `?${query}`})
-  }
+    navigate({ search: `?${query}` });
+  };
   return (
     <div className="bg-white">
       <div>
         {/* Mobile filter dialog */}
-        <Dialog
+        {/* <Dialog
           open={mobileFiltersOpen}
           onClose={setMobileFiltersOpen}
           className="relative z-40 lg:hidden"
@@ -123,7 +116,7 @@ export default function Product() {
                 </button>
               </div>
 
-              {/* Filters */}
+              
               <div>
                 <form className="mt-4 border-t border-gray-200">
                   {filters.map((section) => (
@@ -157,7 +150,9 @@ export default function Product() {
                               className="flex items-center"
                             >
                               <input
-                                onChange={() => handleFilter(option.value,section.id)}
+                                onChange={() =>
+                                  handleFilter(option.value, section.id)
+                                }
                                 defaultValue={option.value}
                                 defaultChecked={option.checked}
                                 id={`filter-mobile-${section.id}-${optionIdx}`}
@@ -181,9 +176,9 @@ export default function Product() {
               </div>
             </DialogPanel>
           </div>
-        </Dialog>
+        </Dialog> */}
 
-        <main className="mx-auto px-4 sm:px-6 lg:px-20">
+        {/* <main className="mx-auto px-4 sm:px-6 lg:px-20">
           <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-24">
             <h1 className="text-4xl font-bold tracking-tight text-gray-900">
               New Arrivals
@@ -249,7 +244,7 @@ export default function Product() {
             </h2>
 
             <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-5">
-              {/* Filters */}
+      
               <div>
                 <div className="py-10 flex justify-between items-center">
                   <h1 className="text-lg opacity-50 font-bold">Filters</h1>
@@ -317,7 +312,7 @@ export default function Product() {
                       <>
                         <h3 className="-my-3 flow-root">
                           <DisclosureButton className="group flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-gray-500">
-                            {/* <span className="font-medium text-gray-900"></span> */}
+                          
                             <FormLabel
                               sx={{ color: "black" }}
                               className="text-gray-900"
@@ -347,7 +342,9 @@ export default function Product() {
                               {section.options.map((option, optionId) => (
                                 <>
                                   <FormControlLabel
-                                    onChange={(e) => handleRadioFilterChange(e,section.id)}
+                                    onChange={(e) =>
+                                      handleRadioFilterChange(e, section.id)
+                                    }
                                     value={option.value}
                                     control={<Radio />}
                                     label={option.label}
@@ -363,7 +360,6 @@ export default function Product() {
                 </form>
               </div>
 
-              {/* Product grid */}
               <div className="lg:col-span-4 w-full">
                 <div className="flex flex-wrap justify-center bg-white py-5">
                   {mens_kurta.map((item) => (
@@ -373,7 +369,7 @@ export default function Product() {
               </div>
             </div>
           </section>
-        </main>
+        </main> */}
       </div>
     </div>
   );

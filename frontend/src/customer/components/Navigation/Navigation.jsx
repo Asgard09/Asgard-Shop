@@ -1,11 +1,12 @@
 import { Fragment, useEffect, useState } from "react";
-import { Dialog, Popover, Tab, Transition } from "@headlessui/react";
+// import { Dialog, Popover, Tab, Transition } from "@headlessui/react";
 import {
   Bars3Icon,
   MagnifyingGlassIcon,
   ShoppingBagIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
+import React from "react";
 
 import { Avatar, Button, Menu, MenuItem } from "@mui/material";
 import { deepPurple } from "@mui/material/colors";
@@ -47,7 +48,10 @@ export default function Navigation() {
   return (
     <div className="bg-white pb-10">
       {/* Mobile menu */}
-      <Transition.Root show={open} as={Fragment}>
+      {/* 
+ád
+ád
+   <Transition.Root show={open} as={Fragment}>
         <Dialog as="div" className="relative z-40 lg:hidden" onClose={setOpen}>
           <Transition.Child
             as={Fragment}
@@ -83,7 +87,7 @@ export default function Navigation() {
                   </button>
                 </div>
 
-                {/* Links */}
+                /* Links 
                 <Tab.Group as="div" className="mt-2">
                   <div className="border-b border-gray-200">
                     <Tab.List className="-mb-px flex space-x-8 px-4">
@@ -147,7 +151,7 @@ export default function Navigation() {
                             >
                               {section.name}
                             </p>
-                            {/* eslint-disable-next-line jsx-a11y/no-redundant-roles */}
+                         
                             <ul
                               role="list"
                               aria-labelledby={`${category.id}-${section.id}-heading-mobile`}
@@ -211,6 +215,8 @@ export default function Navigation() {
         </Dialog>
       </Transition.Root>
 
+
+*/}
       <header className="relative bg-white">
         <p className="flex h-10 items-center justify-center bg-indigo-600 px-4 text-sm font-medium text-white sm:px-6 lg:px-8">
           Get free delivery on orders over $100
@@ -239,7 +245,7 @@ export default function Navigation() {
               </div>
 
               {/* Flyout menus */}
-              <Popover.Group className="hidden lg:ml-8 lg:block lg:self-stretch z-10">
+              {/* <Popover.Group className="hidden lg:ml-8 lg:block lg:self-stretch z-10">
                 <div className="flex h-full space-x-8">
                   {navigation.categories.map((category) => (
                     <Popover key={category.name} className="flex">
@@ -268,7 +274,7 @@ export default function Navigation() {
                             leaveTo="opacity-0"
                           >
                             <Popover.Panel className="absolute inset-x-0 top-full text-sm text-gray-500">
-                              {/* Presentational element used to render the bottom shadow, if we put the shadow on the actual panel it pokes out the top, so we use this shorter element to hide the top of the shadow */}
+                              //Presentational element used to render the bottom shadow, if we put the shadow on the actual panel it pokes out the top, so we use this shorter element to hide the top of the shadow 
                               <div
                                 className="absolute inset-0 top-1/2 bg-white shadow"
                                 aria-hidden="true"
@@ -318,7 +324,7 @@ export default function Navigation() {
                                           >
                                             {section.name}
                                           </p>
-                                          {/* eslint-disable-next-line jsx-a11y/no-redundant-roles */}
+                                          //slint-disable-next-line jsx-a11y/no-redundant-roles 
                                           <ul
                                             role="list"
                                             aria-labelledby={`${section.name}-heading`}
@@ -368,7 +374,7 @@ export default function Navigation() {
                     </a>
                   ))}
                 </div>
-              </Popover.Group>
+              </Popover.Group> */}
 
               <div className="ml-auto flex items-center">
                 <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
@@ -389,7 +395,7 @@ export default function Navigation() {
                       >
                         P
                       </Avatar>
-                      
+
                       <Menu
                         id="basic-menu"
                         anchorEl={anchorEl}
@@ -400,7 +406,9 @@ export default function Navigation() {
                         }}
                       >
                         <MenuItem>Profile</MenuItem>
-                        <MenuItem onClick={()=>navigate("/account/order")}>My Orders</MenuItem>
+                        <MenuItem onClick={() => navigate("/account/order")}>
+                          My Orders
+                        </MenuItem>
                         <MenuItem>Logout</MenuItem>
                       </Menu>
                     </div>
@@ -444,7 +452,7 @@ export default function Navigation() {
           </div>
         </nav>
       </header>
-      <AuthModal handleClose={handleClose} open={openAuthModal}/>
+      <AuthModal handleClose={handleClose} open={openAuthModal} />
     </div>
   );
 }
