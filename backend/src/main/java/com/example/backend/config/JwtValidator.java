@@ -20,6 +20,8 @@ import javax.crypto.SecretKey;
 import java.io.IOException;
 import java.util.List;
 
+//JwtAuthenticationFilter trong thiết lập Spring Security chịu trách nhiệm chặn các yêu cầu HTTP
+//để kiểm tra JWT (Mã thông báo web JSON) hợp lệ
 public class JwtValidator extends OncePerRequestFilter {
     //Cung cấp cơ chế đảm bảo rằng bộ lọc chỉ được thực thi một lần cho mỗi yêu cầu
     @Override
@@ -27,7 +29,7 @@ public class JwtValidator extends OncePerRequestFilter {
     //Nơi định nghĩa logic của bộ lọc
         String jwt = request.getHeader(JwtConstant.JWT_HEADER);
 
-        if(jwt!= null){
+        if(jwt!= null && jwt.startsWith("Bearer ")){
 
             jwt = jwt.substring(7);
             //loại bỏ phần bearer
@@ -51,15 +53,10 @@ public class JwtValidator extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authentication);
                 //Đặt đối tượng Authentication vào SecurityContextHolder. Điều này cho phép Spring Security biết người dùng đã được xác thực và có quyền gì trong suốt quá trình xử lý yêu cầu.
             }catch (Exception e){
-                throw new BadCredentialsException("invalid token... from jwt validation");
+                throw new BadCredentialsException("invalid token... from jwt validation" + e.getMessage());
 
             }
         }
         filterChain.doFilter(request, response);
     }
-
-
-
-
-
 }

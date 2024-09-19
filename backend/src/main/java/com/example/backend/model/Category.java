@@ -13,6 +13,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"name", "level"})})
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,6 +26,7 @@ public class Category {
     @ManyToOne
     @JoinColumn(name = "parent_category_id")
     private Category parentCategory;
+    //categories that can be nested under other categories
 
     private int level;
 }

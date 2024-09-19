@@ -37,7 +37,7 @@ public class Product {
     private int discountedPrice;
 
     @Column(name = "discount_persent")
-    private int discountPersent;
+    private int discountPercent;
 
     @Column(name = "quantity")
     private int quantity;
@@ -65,7 +65,7 @@ public class Product {
     @Column(name = "num_ratings")
     private int numRatings;
 
-    @ManyToOne()
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "category_id")
     private Category category;
 

@@ -6,7 +6,7 @@ import com.example.backend.model.User;
 import com.example.backend.repository.UserRepository;
 import com.example.backend.request.LoginRequest;
 import com.example.backend.response.AuthResponse;
-import com.example.backend.service.CustomUserServiceImplementation;
+import com.example.backend.service.CustomUserServiceImpl;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,7 +19,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,27 +29,25 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Getter
 @Setter
-
 @NoArgsConstructor
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
-
     private UserRepository userRepository;
+
     private JwtProvider jwtProvider;
+
     private PasswordEncoder passwordEncoder;
-    private CustomUserServiceImplementation customUserService;
 
+    private CustomUserServiceImpl customUserService;
 
-    // Constructor Injection
     @Autowired
-    public AuthController(UserRepository userRepository, JwtProvider jwtProvider, PasswordEncoder passwordEncoder, CustomUserServiceImplementation customUserService) {
+    public AuthController(UserRepository userRepository, JwtProvider jwtProvider, PasswordEncoder passwordEncoder, CustomUserServiceImpl customUserService) {
         this.userRepository = userRepository;
         this.jwtProvider = jwtProvider;
         this.passwordEncoder = passwordEncoder;
         this.customUserService = customUserService;
     }
-
 
     @PostMapping("/signup")
     public ResponseEntity<AuthResponse> creatUserHandle(@RequestBody User user) throws UserException {
@@ -86,17 +86,25 @@ public class AuthController {
 
     @PostMapping("/signin")
     public ResponseEntity<AuthResponse> loginUserHandle(@RequestBody LoginRequest loginRequest){
-        String username = loginRequest.getEmail();
-        String password = loginRequest.getPassword();
+        try{
+            String username = loginRequest.getEmail();
+            String password = loginRequest.getPassword();
 
-        Authentication authentication = authenticate(username, password);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+            Authentication authentication = authenticate(username, password);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        String token = jwtProvider.generateToken(authentication);
+            String token = jwtProvider.generateToken(authentication);
 
-        AuthResponse authResponse = new AuthResponse(token, "Signin Success");
+            AuthResponse authResponse = new AuthResponse(token, "Signin Success");
 
-        return new ResponseEntity<AuthResponse>(authResponse, HttpStatus.CREATED);
+            return new ResponseEntity<AuthResponse>(authResponse, HttpStatus.CREATED);
+        }catch(UsernameNotFoundException ex){
+            AuthResponse authResponse = new AuthResponse(null, ex.getMessage());
+            return new ResponseEntity<AuthResponse>(authResponse, HttpStatus.UNAUTHORIZED);
+        }catch (BadCredentialsException ex){
+            AuthResponse authResponse= new AuthResponse(null, ex.getMessage());
+            return new ResponseEntity<AuthResponse>(authResponse, HttpStatus.UNAUTHORIZED);
+        }
 
     }
 
@@ -112,5 +120,6 @@ public class AuthController {
         }
 
         return new UsernamePasswordAuthenticationToken(userDetails, null,userDetails.getAuthorities() );
+        //is a class that implements the Authentication interface
     }
 }

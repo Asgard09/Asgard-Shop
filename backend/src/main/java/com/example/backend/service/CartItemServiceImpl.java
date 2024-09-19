@@ -14,13 +14,19 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-@AllArgsConstructor
+
 @Service
 public class CartItemServiceImpl implements CartItemService{
 
-    private CartItemRepository cartItemRepository;
-    private UserServiceImpl userServiceImpl;
+    private final CartItemRepository cartItemRepository;
+    private final UserServiceImpl userServiceImpl;
 
+
+    @Autowired
+    public CartItemServiceImpl(CartItemRepository cartItemRepository, UserServiceImpl userServiceImpl) {
+        this.cartItemRepository = cartItemRepository;
+        this.userServiceImpl = userServiceImpl;
+    }
 
     @Override
     public CartItem createCartItem(CartItem cartItem) {

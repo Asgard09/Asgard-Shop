@@ -6,6 +6,7 @@ import com.example.backend.model.Product;
 import com.example.backend.request.CreateProductRequest;
 import com.example.backend.response.ApiResponse;
 import com.example.backend.service.ProductService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +17,7 @@ import java.util.List;
 @RequestMapping("/api/admin/products")
 public class AdminProductController {
 
+    @Autowired
     private ProductService productService;
 
     @PostMapping("/")
@@ -28,9 +30,8 @@ public class AdminProductController {
     @DeleteMapping("/{productId}/delete")
     public ResponseEntity<ApiResponse> deleteProduct(@PathVariable Long productId) throws ProductException{
 
-        productService.deleteProduct(productId);
         ApiResponse res = new ApiResponse();
-        res.setMessage("product deleted successfully");
+        res.setMessage(productService.deleteProduct(productId));
         res.setStatus(true);
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
@@ -56,7 +57,7 @@ public class AdminProductController {
         }
 
         ApiResponse res = new ApiResponse();
-        res.setMessage("product deleted successfully");
+        res.setMessage("products create successfully");
         res.setStatus(true);
 
         return new ResponseEntity<>(res, HttpStatus.CREATED);

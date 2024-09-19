@@ -6,16 +6,24 @@ import com.example.backend.model.Product;
 import com.example.backend.model.User;
 import com.example.backend.repository.CartRepository;
 import com.example.backend.request.AddItemRequest;
-import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@AllArgsConstructor
+
 @Service
 public class CartServiceImpl implements CartService{
 
-    private CartRepository cartRepository;
-    private CartItemService cartItemService;
-    private ProductService productService;
+
+    private final CartRepository cartRepository;
+    private final CartItemService cartItemService;
+    private final ProductService productService;
+
+    @Autowired
+    public CartServiceImpl(CartRepository cartRepository, CartItemService cartItemService, ProductService productService) {
+        this.cartRepository = cartRepository;
+        this.cartItemService = cartItemService;
+        this.productService = productService;
+    }
 
     @Override
     public Cart createCart(User user) {

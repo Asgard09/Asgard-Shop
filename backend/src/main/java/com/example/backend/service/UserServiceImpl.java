@@ -6,20 +6,24 @@ import com.example.backend.model.User;
 import com.example.backend.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 
 @NoArgsConstructor
-@AllArgsConstructor
 @Service
 public class UserServiceImpl implements UserService{
 
     private UserRepository userRepository;
     private JwtProvider jwtProvider;
 
-
+    @Autowired
+    public UserServiceImpl(UserRepository userRepository, JwtProvider jwtProvider) {
+        this.userRepository = userRepository;
+        this.jwtProvider = jwtProvider;
+    }
 
     @Override
     public User findUserById(Long userId) throws UserException {

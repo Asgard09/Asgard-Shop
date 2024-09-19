@@ -5,6 +5,7 @@ import com.example.backend.model.*;
 import com.example.backend.repository.*;
 import lombok.AllArgsConstructor;
 import org.aspectj.weaver.ast.Or;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@AllArgsConstructor
+
 @Service
 public class OrderServiceImpl implements OrderService{
 
@@ -20,8 +21,18 @@ public class OrderServiceImpl implements OrderService{
     private CartService cartService;
     private AddressRepository addressRepository;
     private UserRepository userRepository;
-    private OrderItemService orderItemService;
+
     private OrderItemRepository orderItemRepository;
+
+    @Autowired
+    public OrderServiceImpl(OrderRepository orderRepository, CartService cartService, AddressRepository addressRepository,
+                            UserRepository userRepository,  OrderItemRepository orderItemRepository) {
+        this.orderRepository = orderRepository;
+        this.cartService = cartService;
+        this.addressRepository = addressRepository;
+        this.userRepository = userRepository;
+        this.orderItemRepository = orderItemRepository;
+    }
 
     @Override
     public Order createOrder(User user, Address shippingAddress) {

@@ -18,9 +18,9 @@ public class CreateProductRequest {
 
     private int price;
 
-    private int dicountedPrice;
+    private int discountedPrice;
 
-    private int discountPersent;
+    private int discountPercent;
 
     private int quantity;
 

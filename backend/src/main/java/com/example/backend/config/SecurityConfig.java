@@ -19,7 +19,7 @@ import java.util.Collections;
 import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
-public class AppConfig {
+public class SecurityConfig {
 
 
     @Bean
@@ -38,7 +38,9 @@ public class AppConfig {
                 )
                 .addFilterBefore(new JwtValidator(), BasicAuthenticationFilter.class)
                 .csrf(csrf -> csrf.disable())
+                //Bảo vệ khỏi cross-side
                 .cors(cors ->
+                //CORS là viết tắt của Cross-Origin Resource Sharing là một cơ chế cho phép nhiều tài nguyên khác nhau (fonts, Javascript, v.v…) của một trang web có thể được truy vấn từ domain khác với domain của trang đó.
                         cors.configurationSource(new CorsConfigurationSource() {
                             @Override
                             public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {

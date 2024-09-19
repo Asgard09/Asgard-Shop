@@ -13,11 +13,17 @@ import java.util.Date;
 public class JwtProvider {
     SecretKey key = Keys.hmacShaKeyFor(JwtConstant.SECRET_KEY.getBytes());
     public String generateToken(Authentication auth){
+        //auth object include: principal(UserDetails --> Represent the information of user include: name, password, authorities),
         String jwt = Jwts.builder()
                 .setIssuedAt(new Date())
+                //Đặt ngày tạo của token là thời điểm hiện tại.
                 .setExpiration(new Date(new Date().getTime()+86400000))
+                //Đặt ngày hết hạn của token là một ngày sau ngày tạo (86400000 ms = 24 giờ).
                 .claim("email", auth.getName())
-                .signWith(key).compact();
+                //đại diện cho các thông tin hoặc dữ liệu được mã hóa trong token. Ở đây có nghĩa là đặt email username
+                //là phần payload của jwt
+                .signWith(key)
+                .compact();
         return jwt;
     }
 

@@ -4,7 +4,7 @@ import com.example.backend.exception.OrderException;
 import com.example.backend.model.Order;
 import com.example.backend.response.ApiResponse;
 import com.example.backend.service.OrderService;
-import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,9 +13,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/admin/orders")
-@AllArgsConstructor
+
 public class AdminOrderController {
 
+    @Autowired
     private OrderService orderService;
 
     @GetMapping("/")
