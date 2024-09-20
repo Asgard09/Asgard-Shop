@@ -20,10 +20,10 @@
   ```
 */
 "use client";
-
+import React from "react";
 import { useState } from "react";
 import { StarIcon } from "@heroicons/react/20/solid";
-import { Radio, RadioGroup } from "@headlessui/react";
+// import { Radio, RadioGroup } from "@headlessui/react";
 import {
   ButtonBase,
   Rating,
@@ -33,7 +33,7 @@ import {
   LinearProgress,
 } from "@mui/material";
 import ProductReviewCard from "./ProductReviewCrad";
-import HomeSectionCard from "../HomeSectionCard//HomeSectionCard"
+import HomeSectionCard from "../HomeSectionCard//HomeSectionCard";
 import { mens_kurta } from "../../../Data/mens_kurta";
 import { useNavigate } from "react-router-dom";
 const product = {
@@ -94,9 +94,9 @@ export default function ProductDetails() {
   const [selectedColor, setSelectedColor] = useState(product.colors[0]);
   const [selectedSize, setSelectedSize] = useState(product.sizes[2]);
   const navigate = useNavigate();
-  const handleAddToCart = () =>{
-    navigate("/cart")
-  }
+  const handleAddToCart = () => {
+    navigate("/cart");
+  };
   return (
     <div className="bg-white">
       <div className="pt-6">
@@ -201,7 +201,7 @@ export default function ProductDetails() {
                   </div>
 
                   <fieldset aria-label="Choose a size" className="mt-4">
-                    <RadioGroup
+                    {/* <RadioGroup
                       value={selectedSize}
                       onChange={setSelectedSize}
                       className="grid grid-cols-4 gap-4 sm:grid-cols-8 lg:grid-cols-4"
@@ -247,11 +247,12 @@ export default function ProductDetails() {
                           )}
                         </Radio>
                       ))}
-                    </RadioGroup>
+                    </RadioGroup> */}
                   </fieldset>
                 </div>
 
-                <Button onClick={handleAddToCart}
+                <Button
+                  onClick={handleAddToCart}
                   color="secondary"
                   variant="contained"
                   sx={{ px: "2rem", py: "1rem" }}
@@ -361,7 +362,6 @@ export default function ProductDetails() {
                         sx={{ bgcolor: "gray", borderRadius: 4, height: 7 }}
                         variant="determinate"
                         value={25}
-                        
                       />
                     </Grid>
                   </Grid>
@@ -406,7 +406,9 @@ export default function ProductDetails() {
           <h1 className="py-5 text-xl font-bold">Similer Product</h1>
 
           <div className="flex flex-wrap space-y-5">
-            {mens_kurta.map((item) =><HomeSectionCard product={item}/>)}
+            {mens_kurta.map((item) => (
+              <HomeSectionCard product={item} />
+            ))}
           </div>
         </section>
       </div>
